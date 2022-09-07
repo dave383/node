@@ -247,6 +247,7 @@ const (
             ]
         }
     `
+
 	transfersSchema = `
         {
             "type": "record",
@@ -301,6 +302,7 @@ const (
             ]
         }
     `
+
 	blockDatasSchema = `
 		{
 			"namespace":"com.company",
@@ -601,7 +603,8 @@ const (
 							"fields": [
 								{"name": "delegator", "type": "string"},
 								{"name": "validator", "type": "string"},
-								{"name": "shares", "type": "long"}
+								{"name": "shares", "type": "long"},
+								{"name": "crossStake", "type": "boolean"}
 							]
 						}
 					}

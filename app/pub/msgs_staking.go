@@ -292,6 +292,7 @@ func (msg *Delegation) toNativeMap() map[string]interface{} {
 	native["delegator"] = msg.DelegatorAddr.String()
 	native["validator"] = msg.ValidatorAddr.String()
 	native["shares"] = msg.Shares.RawInt()
+	native["crossStake"] = msg.CrossStake
 	return native
 }
 
