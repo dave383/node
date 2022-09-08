@@ -603,8 +603,7 @@ const (
 							"fields": [
 								{"name": "delegator", "type": "string"},
 								{"name": "validator", "type": "string"},
-								{"name": "shares", "type": "long"},
-								{"name": "crossStake", "type": "boolean"}
+								{"name": "shares", "type": "long"}
 							]
 						}
 					}
@@ -702,7 +701,8 @@ const (
 								{"name": "delegator", "type": "string"},
 								{"name": "validator", "type": "string"},
 								{"name": "amount", "type": "org.binance.dex.model.avro.Coin"},
-								{"name": "txHash", "type": "string"}
+								{"name": "txHash", "type": "string"},
+								{"name": "crossStake", "type": "boolean"}
 							]
 						}
 					}
