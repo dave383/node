@@ -17,7 +17,7 @@ import (
 
 var (
 	chainID = "Binance-Chain-Kongo"
-	nodeNum = 1
+	nodeNum = 3
 )
 
 func main() {
@@ -48,11 +48,12 @@ func main() {
 	ServerContext := config.NewDefaultContext()
 	ServerContext.Bech32PrefixAccAddr = ctx.Bech32PrefixAccAddr
 	ServerContext.Bech32PrefixAccPub = ctx.Bech32PrefixAccPub
+	// nodesTemplateParams := make([]NodeTemplateParams, nodeNum)
 
 	for i := 0; i < nodeNum; i++ {
 		nodeName := fmt.Sprintf("node%d", i)
-		nodeDir := path.Join(devNetHomeDir, nodeName, "testnoded")
-		cliDir := path.Join(devNetHomeDir, nodeName, "testnodecli")
+		nodeDir := path.Join(devNetHomeDir, nodeName, "noded")
+		cliDir := path.Join(devNetHomeDir, nodeName, "nodecli")
 		ctxConfig.SetRoot(nodeDir)
 		for _, subdir := range []string{"data", "config"} {
 			err = os.MkdirAll(path.Join(nodeDir, subdir), os.ModePerm)
@@ -75,6 +76,8 @@ func main() {
 		binanceChainConfig.UpgradeConfig.BEP128Height = 1
 		binanceChainConfig.UpgradeConfig.BEP151Height = 1
 		binanceChainConfig.UpgradeConfig.BEP153Height = 50
+		// binanceChainConfig.UpgradeConfig.BEP159Height = 100
+		// binanceChainConfig.UpgradeConfig.BEP159Phase2Height = 150
 		binanceChainConfig.BreatheBlockInterval = 100
 		binanceChainConfig.LogToConsole = false
 		binanceChainConfig.CrossChainConfig.BscIbcChainId = 714
@@ -106,8 +109,15 @@ func main() {
 		ctxConfig.P2P.ListenAddress = fmt.Sprintf("tcp://0.0.0.0:%d", 26656+4*i)
 		ctxConfig.RPC.ListenAddress = fmt.Sprintf("tcp://0.0.0.0:%d", 26657+4*i)
 		ctxConfig.ProxyApp = fmt.Sprintf("tcp://0.0.0.0:%d", 26658+4*i)
-		ctxConfig.LogLevel = "main:info,oracle:info,stake:info,*:error"
+		ctxConfig.LogLevel = "main:info,state:info,oracle:info,stake:info,*:error"
 		// config.toml
 		bnbInit.WriteConfigFile(ctxConfig)
+		// docker_compose.yml params
+		// node := NodeTemplateParams{Index: i, PortIP: i + 100, PortExpose1: 8000 + i, PortExpose2: 8100 + i}
+		// nodesTemplateParams[i] = node
 	}
+	// dockerComposeTemplateParams := DockerComposeTemplateParams{
+	// 	Nodes: nodesTemplateParams,
+	// }
+	// WriteConfigFile(filepath.Join(devnetHomeDir, "docker-compose.yml"), &dockerComposeTemplateParams)
 }
